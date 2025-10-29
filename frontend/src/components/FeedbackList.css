@@ -1,0 +1,112 @@
+:root {
+  --primary: #B5838D;     /* Dusty Rose */
+  --secondary: #6D6875;   /* Muted Gray-Purple */
+  --accent: #FFCDB2;      /* Soft Peach */
+  --background: #FFF1E6;  /* Cream */
+  --text: #3E3E3E;        /* Deep Gray */
+}
+
+.feedback-list-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 30px;
+  background-color: var(--background);
+  border-radius: 15px;
+}
+
+.feedback-list-container h2 {
+  color: var(--primary);
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.no-feedback {
+  text-align: center;
+  color: var(--secondary);
+  font-size: 16px;
+  padding: 40px;
+}
+
+.feedback-list {
+  display: grid;
+  gap: 20px;
+}
+
+.feedback-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--accent);
+  box-shadow: 0 2px 8px rgba(181, 131, 141, 0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feedback-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(181, 131, 141, 0.25);
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.feedback-header h3 {
+  color: var(--text);
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.course-code {
+  background-color: var(--accent);
+  color: var(--secondary);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.feedback-rating {
+  color: var(--primary);
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.feedback-comments {
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.feedback-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--secondary);
+  padding-top: 12px;
+}
+
+.feedback-date {
+  color: var(--secondary);
+  font-size: 13px;
+}
+
+.delete-btn {
+  padding: 6px 16px;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: var(--secondary);
+  transform: scale(1.05);
+}
