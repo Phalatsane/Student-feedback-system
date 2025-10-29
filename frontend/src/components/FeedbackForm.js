@@ -68,8 +68,8 @@ const FeedbackForm = ({ onFeedbackSubmitted }) => {
 
     try {
       await axios.post(`${API_URL}/api/feedback`, {
-        studentName: formData.studentName,
-        courseCode: formData.courseCode,
+        studentname: formData.studentName, // lowercase to match DB
+        coursecode: formData.courseCode,   // lowercase to match DB
         comments: formData.comments,
         rating: parseInt(formData.rating)
       });
