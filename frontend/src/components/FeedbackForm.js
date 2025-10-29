@@ -17,25 +17,25 @@ const FeedbackForm = ({ onFeedbackSubmitted }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
-  let { name, value } = e.target;
+    let { name, value } = e.target;
 
-  // Prevent numbers in studentName
-  if (name === 'studentName') {
-    value = value.replace(/[0-9]/g, ''); // remove digits
-  }
+    // Prevent numbers in studentName
+    if (name === 'studentName') {
+      value = value.replace(/[0-9]/g, '');
+    }
 
-  setFormData(prev => ({
-    ...prev,
-    [name]: value
-  }));
-
-  if (errors[name]) {
-    setErrors(prev => ({
+    setFormData(prev => ({
       ...prev,
-      [name]: ''
+      [name]: value
     }));
-  }
-};
+
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
 
   const validateForm = () => {
     const newErrors = {};
@@ -54,7 +54,7 @@ const FeedbackForm = ({ onFeedbackSubmitted }) => {
 
     if (!formData.rating) {
       newErrors.rating = 'Rating is required';
-    } else if (formData.rating < 1 || formData.rating > 5) {
+    } else if (Number(formData.rating) < 1 || Number(formData.rating) > 5) {
       newErrors.rating = 'Rating must be between 1 and 5';
     }
 
@@ -64,7 +64,7 @@ const FeedbackForm = ({ onFeedbackSubmitted }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSuccessMessage('');
-    
+
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -89,14 +89,14 @@ const FeedbackForm = ({ onFeedbackSubmitted }) => {
         rating: ''
       });
       setErrors({});
-      
+
       if (onFeedbackSubmitted) {
         onFeedbackSubmitted();
       }
     } catch (error) {
       console.error('Error submitting feedback:', error);
-      setErrors({ 
-        submit: error.response?.data?.error || 'Failed to submit feedback. Please try again.' 
+      setErrors({
+        submit: error.response?.data?.error || 'Failed to submit feedback. Please try again.'
       });
     } finally {
       setIsSubmitting(false);
@@ -106,11 +106,11 @@ const FeedbackForm = ({ onFeedbackSubmitted }) => {
   return (
     <div className="feedback-form-container">
       <h2>Submit Course Feedback</h2>
-      
+
       {successMessage && (
         <div className="success-message">{successMessage}</div>
       )}
-      
+
       {errors.submit && (
         <div className="error-message">{errors.submit}</div>
       )}
