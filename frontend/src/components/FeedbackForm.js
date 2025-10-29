@@ -61,47 +61,51 @@ const FeedbackForm = ({ onFeedbackSubmitted }) => {
     return newErrors;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSuccessMessage('');
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setSuccessMessage('');
 
-    const newErrors = validateForm();
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
+  // Validate form fields
+  const newErrors = validateForm();
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    return;
+  }
+
+  setIsSubmitting(true);
+
+  try {
+    // Use camelCase keys to match backend
+    await axios.post(`${API_URL}/api/feedback`, {
+      studentName: formData.studentName, // matches backend
+      courseCode: formData.courseCode,   // matches backend
+      comments: formData.comments,
+      rating: parseInt(formData.rating)
+    });
+
+    setSuccessMessage('Feedback submitted successfully!');
+    setFormData({
+      studentName: '',
+      courseCode: '',
+      comments: '',
+      rating: ''
+    });
+    setErrors({});
+
+    if (onFeedbackSubmitted) {
+      onFeedbackSubmitted();
     }
+  } catch (error) {
+    console.error('Error submitting feedback:', error);
 
-    setIsSubmitting(true);
+    setErrors({
+      submit: error.response?.data?.error || 'Failed to submit feedback. Please try again.'
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
-    try {
-      await axios.post(`${API_URL}/api/feedback`, {
-        studentname: formData.studentName, // lowercase to match DB
-        coursecode: formData.courseCode,   // lowercase to match DB
-        comments: formData.comments,
-        rating: parseInt(formData.rating)
-      });
-
-      setSuccessMessage('Feedback submitted successfully!');
-      setFormData({
-        studentName: '',
-        courseCode: '',
-        comments: '',
-        rating: ''
-      });
-      setErrors({});
-
-      if (onFeedbackSubmitted) {
-        onFeedbackSubmitted();
-      }
-    } catch (error) {
-      console.error('Error submitting feedback:', error);
-      setErrors({
-        submit: error.response?.data?.error || 'Failed to submit feedback. Please try again.'
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <div className="feedback-form-container">
