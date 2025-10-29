@@ -1,9 +1,9 @@
 :root {
-  --primary: #B5838D;     /* Dusty Rose */
-  --secondary: #6D6875;   /* Muted Gray-Purple */
-  --accent: #FFCDB2;      /* Soft Peach */
-  --background: #FFF1E6;  /* Cream */
-  --text: #3E3E3E;        /* Deep Gray */
+  --primary: #000000;      /* Black */
+  --secondary: #4d4d4d;    /* Dark Gray */
+  --accent: #f0f0f0;       /* Light Gray */
+  --background: #ffffff;   /* White */
+  --text: #333333;         /* Medium Gray */
 }
 
 .feedback-list-container {
@@ -12,6 +12,7 @@
   padding: 30px;
   background-color: var(--background);
   border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .feedback-list-container h2 {
@@ -34,17 +35,17 @@
 }
 
 .feedback-card {
-  background: #fff;
+  background: #ffffff;
   padding: 20px;
   border-radius: 12px;
   border: 1px solid var(--accent);
-  box-shadow: 0 2px 8px rgba(181, 131, 141, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .feedback-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(181, 131, 141, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .feedback-header {
@@ -86,7 +87,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid var(--secondary);
+  border-top: 1px solid var(--accent);
   padding-top: 12px;
 }
 
@@ -98,7 +99,7 @@
 .delete-btn {
   padding: 6px 16px;
   background-color: var(--primary);
-  color: #fff;
+  color: #ffffff;
   border: none;
   border-radius: 8px;
   font-size: 14px;
