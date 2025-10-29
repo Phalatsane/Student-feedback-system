@@ -17,18 +17,25 @@ const FeedbackForm = ({ onFeedbackSubmitted }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
+  let { name, value } = e.target;
+
+  // Prevent numbers in studentName
+  if (name === 'studentName') {
+    value = value.replace(/[0-9]/g, ''); // remove digits
+  }
+
+  setFormData(prev => ({
+    ...prev,
+    [name]: value
+  }));
+
+  if (errors[name]) {
+    setErrors(prev => ({
       ...prev,
-      [name]: value
+      [name]: ''
     }));
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
-  };
+  }
+};
 
   const validateForm = () => {
     const newErrors = {};
