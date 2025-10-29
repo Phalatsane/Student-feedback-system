@@ -15,17 +15,17 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-// Test database connection and create table
+// Test database connection and create table if it doesn't exist
 (async () => {
   try {
     const client = await pool.connect();
     console.log('Connected to PostgreSQL database');
-    
+
     const createTableQuery = `
       CREATE TABLE IF NOT EXISTS feedback (
         id SERIAL PRIMARY KEY,
-        studentName VARCHAR(255) NOT NULL,
-        courseCode VARCHAR(50) NOT NULL,
+        studentname VARCHAR(255) NOT NULL,
+        coursecode VARCHAR(50) NOT NULL,
         comments TEXT NOT NULL,
         rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -80,7 +80,7 @@ app.post('/api/feedback', async (req, res) => {
     }
 
     const result = await pool.query(
-      'INSERT INTO feedback (studentName, courseCode, comments, rating) VALUES ($1, $2, $3, $4) RETURNING *',
+      'INSERT INTO feedback (studentname, coursecode, comments, rating) VALUES ($1, $2, $3, $4) RETURNING *',
       [studentName, courseCode, comments, rating]
     );
 
@@ -91,7 +91,7 @@ app.post('/api/feedback', async (req, res) => {
   }
 });
 
-// DELETE - Remove feedback (BONUS)
+// DELETE - Remove feedback
 app.delete('/api/feedback/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -111,20 +111,15 @@ app.delete('/api/feedback/:id', async (req, res) => {
   }
 });
 
-// GET - Dashboard statistics (THIS WAS MISSING!)
+// GET - Dashboard statistics
 app.get('/api/dashboard/stats', async (req, res) => {
   try {
-    // Get total feedback count
     const totalResult = await pool.query('SELECT COUNT(*) as count FROM feedback');
-    
-    // Get average rating
     const avgResult = await pool.query('SELECT AVG(rating) as average FROM feedback');
-    
-    // Get feedback count by course
     const courseResult = await pool.query(
       'SELECT coursecode, COUNT(*) as count FROM feedback GROUP BY coursecode ORDER BY count DESC'
     );
-    
+
     res.json({
       totalFeedback: parseInt(totalResult.rows[0].count),
       averageRating: avgResult.rows[0].average 
@@ -140,5 +135,5 @@ app.get('/api/dashboard/stats', async (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
