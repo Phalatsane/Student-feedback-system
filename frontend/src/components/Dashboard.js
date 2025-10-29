@@ -31,18 +31,13 @@ const Dashboard = () => {
     }
   };
 
-  if (loading) {
-    return <div className="loading">Loading dashboard...</div>;
-  }
-
-  if (error) {
-    return <div className="error-message">{error}</div>;
-  }
+  if (loading) return <div className="loading">Loading dashboard...</div>;
+  if (error) return <div className="error-message">{error}</div>;
 
   return (
     <div className="dashboard-container">
       <h2>Feedback Dashboard</h2>
-      
+
       <div className="stats-grid">
         <div className="stat-card">
           <div className="stat-content">
